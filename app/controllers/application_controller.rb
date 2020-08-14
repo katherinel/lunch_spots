@@ -6,7 +6,8 @@ class ApplicationController < ActionController::API
   end
 
   def encode_token(payload)
-    JWT.encode(payload, 'supersecret')
+    payload[:exp] = 2.hours.from_now.to_i
+    JWT.encode(payload, Rails.application.credentials.dig(:jwt_secret))
   end
 
   private
@@ -22,7 +23,7 @@ class ApplicationController < ActionController::API
     token = auth_header.split(' ')[1]
     # header: { 'Authorization': 'Bearer <token>' }
     begin
-      JWT.decode(token, 'supersecret', true, algorithm: 'HS256')
+      JWT.decode(token, Rails.application.credentials.dig(:jwt_secret), true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
     end
