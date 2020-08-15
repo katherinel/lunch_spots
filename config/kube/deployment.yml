@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lunch-spots-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lunch-spots
+  template:
+    metadata:
+      labels:
+        app: lunch-spots
+    spec:
+      containers:
+      - name: rails-app
+        image: kleipper/lunchspots:latest
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: env
