@@ -3,7 +3,6 @@ module Places
     def initialize(place, keyword = nil)
       @place = place
       @keyword = keyword
-      @results = results
     end
 
     def results

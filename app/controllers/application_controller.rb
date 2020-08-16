@@ -7,8 +7,18 @@ class ApplicationController < ActionController::Base
   end
 
   def encode_token(payload)
-    @token_expiry = payload[:exp] = 2.hours.from_now.to_i
-    JWT.encode(payload, Rails.application.credentials.dig(:jwt_secret))
+    token_life = 2.hours
+    cache_key = "jwt.#{payload[:user_id]}"
+
+    token_expiry = token_life.from_now.to_i
+
+    Rails.cache.fetch(cache_key, expires_in: token_life) do
+      payload[:exp] = token_expiry
+      {
+        token: JWT.encode(payload, Rails.application.credentials.dig(:jwt_secret)),
+        expires_at: Time.at(token_expiry)
+      }
+    end
   end
 
   # Devise redirects

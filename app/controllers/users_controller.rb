@@ -16,8 +16,7 @@ class UsersController < ApplicationController
 
     if @user&.api_key = params[:api_key]
       token = encode_token({ user_id: @user.id })
-      expires_at = Time.at(@token_expiry)
-      render json: { token: token, expires_at: expires_at }
+      render json: token
     else
       render json: { error: 'Invalid email or API key' }
     end
