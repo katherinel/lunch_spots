@@ -1,7 +1,8 @@
-FROM ruby:2.6.4-alpine
+FROM ruby:2.5.8-alpine
 
 RUN apk add --update --no-cache \
     build-base \
+    postgresql-dev \
     postgresql-client \
     git \
     file \
