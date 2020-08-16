@@ -13,7 +13,7 @@ module Places
       list.map do |result|
         {
           name: result.name,
-          address: result.formatted_address,
+          open_now: result.opening_hours.try(:[], 'open_now'),
           lat_long: "#{result.lat},#{result.lng}",
           rating: result.rating,
           photo_url: result.photos&.first&.fetch_url(800)

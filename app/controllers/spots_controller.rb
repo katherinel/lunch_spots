@@ -2,7 +2,7 @@ class SpotsController < ApplicationController
   before_action :authorized
 
   def search
-    render json: Spot.search_by_location(spot_params)
+    render json: Spot.search_by_location(spot_params[:location], spot_params[:keyword])
   end
 
   private
