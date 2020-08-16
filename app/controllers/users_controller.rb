@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorized, only: [:auto_login]
+  before_action :authorized, except: %i[create request_token show]
 
   def create
     @user = User.create(user_params)
@@ -7,28 +7,29 @@ class UsersController < ApplicationController
       token = encode_token({ user_id: @user.id })
       render json: { user: @user, token: token }
     else
-      render json: { error: 'Invalid username or password' }
+      render json: { error: 'Invalid email or password' }
     end
   end
 
-  def login
-    @user = User.find_by(username: params[:username])
+  def request_token
+    @user = User.find_by(email: params[:email])
 
-    if @user&.authenticate(params[:password])
+    if @user&.api_key = params[:api_key]
       token = encode_token({ user_id: @user.id })
-      render json: { user: @user, token: token }
+      expires_at = Time.at(@token_expiry)
+      render json: { token: token, expires_at: expires_at }
     else
-      render json: { error: 'Invalid username or password' }
+      render json: { error: 'Invalid email or API key' }
     end
   end
 
-  def auto_login
-    render json: @user
+  def show
+    redirect_to :new_user_session unless user_signed_in?
   end
 
   private
 
   def user_params
-    params.permit(:username, :password)
+    params.permit(:email, :api_key)
   end
 end

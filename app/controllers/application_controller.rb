@@ -1,14 +1,23 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery unless: -> { request.format.json? }
-  before_action :authorized
+  # before_action :authorized
 
   def authorized
-    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+    render json: { error: 'JWT is invalid' }, status: :unauthorized unless logged_in?
   end
 
   def encode_token(payload)
-    payload[:exp] = 2.hours.from_now.to_i
+    @token_expiry = payload[:exp] = 2.hours.from_now.to_i
     JWT.encode(payload, Rails.application.credentials.dig(:jwt_secret))
+  end
+
+  # Devise redirects
+  def after_sign_in_path_for(resource)
+    profile_path(current_user)
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
   end
 
   private
@@ -28,6 +37,10 @@ class ApplicationController < ActionController::Base
     rescue JWT::DecodeError
       nil
     end
+  end
+
+  def api_key_match
+
   end
 
   def logged_in_user

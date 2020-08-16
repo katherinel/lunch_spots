@@ -1,0 +1,36 @@
+<div style="border: 1px solid black; padding: 10px">
+  <p>
+    <b>Your API key:</b> <span style="background-color: #ddd"><code><%= current_user.api_key %></code></span>
+  <p>
+
+  <p>
+    To make calls to the Lunch Spots API, first obtain a JWT at the <b>/request_token</b> POST endpoint:
+  </p>
+  <p>
+    <code>POST http://example.com/request_token?api_key=<%= current_user.api_key %>&amp;email=<%= current_user.email %></code>
+  </p>
+  <p>
+    Sample JSON response:
+  <p>
+  <p>
+    <pre>
+  {
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1OTc1NDQzOTB9.jsY_7wQ-I0FYzJ4PyFDYBVrlXDimnMJmqvkxz8x_OQg",
+    "expires_at": "2020-08-15T19:19:50.000-07:00"
+  }
+  </pre>
+  </p>
+  </p>
+  <p>
+    The JWT expires in 2 hours. Use it in the header of your POST requests to the <b>/search</b> endpoint.
+    The other required params are <code>location</code> and <code>keyword</code>.
+  </p>
+  <p>
+    <code>http://example.com/search?location=&lt;ADDRESS&gt;&amp;keyword=&lt;CUISINE&gt;</code>
+  </p>
+  <p>Sample CURL request:</p>
+  <pre>
+  curl --request POST 'http://example.com/search?location=123%20main%20st%20ny%20ny&amp;keyword=tacos' \
+       --header 'Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.nX2UjzD54cXJv0BpmCjTBQGgfFglLGbzlx31RS4HZAg'
+  </pre>
+</div>

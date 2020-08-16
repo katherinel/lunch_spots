@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  resource :users, only: [:create]
-  post '/login', to: 'users#login'
-  get '/auto_login', to: 'users#auto_login'
+  devise_for :users
+  # resource :users, only: [:create]
+  post '/request_token', to: 'users#request_token'
+
+  get '/profile', to: 'users#show'
 
   post '/search', to: 'spots#search'
 end
