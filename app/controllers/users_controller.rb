@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def request_token
     @user = User.find_by(email: params[:email])
 
-    if @user&.api_key = params[:api_key]
+    if @user&.api_key == params[:api_key]
       token = encode_token({ user_id: @user.id })
       render json: token
     else
