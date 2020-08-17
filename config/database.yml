@@ -10,7 +10,10 @@ development:
   <<: *default
   database: lunch_spots_development
 
-
 test:
   <<: *default
   database: lunch_spots_test
+
+production:
+  <<: *default
+  database: 

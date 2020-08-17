@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   # Devise redirects
   def after_sign_in_path_for(resource)
-    profile_path(current_user)
+    profile_path
   end
 
   def after_sign_out_path_for(resource_or_scope)
