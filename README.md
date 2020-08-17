@@ -59,5 +59,7 @@ Finally, the network policy specifies where ingress and egress is allowed from. 
 
 Given more time, I would make the following improvements:
 - Add RSpec tests for model methods, test the controllers with request specs, and also add route specs.
+- Encrypt the user API keys in the db.
+- Have JWT be revoked if a user account is deleted.
 - Manage the DigitalOcean resource creation through Terraform.
 - Add DNS and TLS.
