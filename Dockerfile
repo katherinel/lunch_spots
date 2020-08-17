@@ -18,7 +18,6 @@ COPY . .
 
 EXPOSE 3000
 
-# Precompile assets
-# RUN RAILS_ENV=production SECRET_KEY_BASE=foo bundle exec rake assets:precompile
+RUN bundle exec rake assets:precompile
 
 CMD ["bundle", "exec", "rails", "server", "-p", "3000", "-b", "0.0.0.0"]

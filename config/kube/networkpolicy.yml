@@ -11,3 +11,9 @@ spec:
   - Egress
   ingress:
   - {}
+  egress:
+  - {}
+# Note about the open egress: I set it to this to allow it to make outgoing
+# connections to the DigitalOcean database that I set up. Ideally, there would
+# be the IP of the database here instead of allowing all, but I wasn't able to
+# find an IP in the DigitalOcean settings.

@@ -15,8 +15,36 @@ spec:
       containers:
       - name: rails-app
         image: kleipper/lunchspots:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
-        envFrom:
-        - configMapRef:
-            name: env
+        env:
+          - name: RAILS_ENV
+            value: production
+          - name: RAILS_LOG_TO_STDOUT
+            value: enabled
+          - name: PROD_DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: "prod-db-creds"
+                key: host
+          - name: PROD_DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: "prod-db-creds"
+                key: username
+          - name: PROD_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: "prod-db-creds"
+                key: password
+          - name: PROD_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: "prod-db-creds"
+                key: name
+          - name: PROD_DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: "prod-db-creds"
+                key: port

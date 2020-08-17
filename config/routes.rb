@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   authenticated do
     get '/profile', to: 'users#show'
-  end 
+  end
 end
