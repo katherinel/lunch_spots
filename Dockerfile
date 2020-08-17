@@ -4,7 +4,7 @@ RUN apk add --update --no-cache \
     build-base \
     postgresql-dev \
     postgresql-client \
-    git \
+    nodejs \
     file \
     tzdata
 
